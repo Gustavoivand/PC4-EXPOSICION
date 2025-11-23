@@ -1,0 +1,577 @@
+\documentclass{beamer}%Tipo de cocumento
+\usetheme{Madrid}%Tema
+\usepackage[utf8]{inputenc}%Acentos
+\usepackage[T1]{fontenc}%Codificacion de fuente
+\usepackage{lmodern}%Fuente
+\usepackage[spanish]{babel}%Idioma
+\usepackage{amsmath,amssymb}%Paquetes matematicos
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{upquote}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{url}
+
+\titlegraphic { 
+\begin{tikzpicture}[overlay,remember picture]
+    \node[left=0.3cm] at (current page.333){
+        \includegraphics[width=3cm]{imagenes/logo UNI.jpg}
+    };
+\end{tikzpicture}
+}
+
+\title[SMTP \& STP]{Algoritmos MST y STP aplicados en artículos recientes}
+\author[Delgado R. \and Torres R.]{Delgado Romero, Gustavo \inst{1} \and Torres Reategui, Joaquin\inst{2}}
+\institute[UNI-FC]{
+  \inst{}%
+  Facultad de Ciencias\\Escuela profesional de Ciencias de la computación\\
+  Universidad Nacional de Ingeniería
+}
+
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \tiny
+  Documentos fuente:
+  \begin{center}
+    \begin{itemize}
+        \item \url{https://doi.org/10.3390/buildings14010213}
+        \item \url{https://arxiv.org/pdf/2511.11598v1}  
+    \end{itemize}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+ \tableofcontents[hideallsubsections]
+\end{frame}
+\section{Introducción}
+\begin{frame}
+\frametitle{Introducción}
+A continuación, se presentan dos algoritmos utilizados en la optimización de redes y estructuras: el Algoritmo de Árbol de Expansión Mínima (MST) y el Algoritmo de Árbol de caminos más cortos (STP). Estos algoritmos son fundamentales en diversas aplicaciones, desde la planificación de infraestructuras hasta la optimización de rutas en redes de comunicación.   
+\end{frame}
+
+\section{Algoritmo MST}
+\begin{frame}
+ \tableofcontents[currentsection]
+\end{frame}
+
+\subsection{Título y planteamiento del problema}
+    \begin{frame}
+
+    \frametitle{Título y planteamiento del problema del artículo}
+    \begin{itemize}
+        \item \textbf{Título:} Integrating Minimum Spanning Tree and MILP in Urban Planning: A Novel Algorithmic Perspective.
+        \item \textbf{Objetivo:} diseñar una asignación de viviendas a puntos (esquinas/POI) y
+            una red que conecte esas esquinas minimizando un coste combinado.
+        \item \textbf{Decisiones:}
+        \begin{itemize}
+            \item para cada vivienda, elegir exactamente una esquina (asignación),
+            \item elegir las aristas del MST entre esquinas (diseño de red).
+        \end{itemize}
+        \item \textbf{Restricciones relevantes:}
+        \begin{itemize}
+            \item capacidad máxima de viviendas por esquina,
+            \item variables binarias (asignación y selección de aristas),
+            \item estructura de árbol para la red (MST).
+        \end{itemize}
+    \end{itemize}
+    \end{frame}
+    \begin{frame}{Ejemplo de aplicacion del problema}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.45\textwidth]{imagenes/buildings-14-00213-g015.png}
+        \caption{Demostración de la aplicación del algoritmo en un paisaje urbano del Reino Unido, mostrando las conexiones optimizadas entre casas y transformadores a través del MST.}
+    \end{figure}
+\end{frame}
+% ------------------------------------------------------------------------
+\subsection{Formulación matemática (MILP)}
+    \begin{frame}{Notación y parámetros}
+    \begin{description}
+        \item[$N$] número de viviendas, indexadas por $i=1,\dots,N$.
+        \item[$M$] número de esquinas (candidatas o seleccionadas), indexadas por $j=1,\dots,M$.
+        \item[$d_{ij}$] distancia (Euclidiana) entre vivienda $i$ y esquina $j$.
+        \item[$w_{uv}$] peso (distancia) entre esquina $u$ y esquina $v$ (posibles aristas).
+        \item[$x_{ij}\in\{0,1\}$] variable: 1 si vivienda $i$ asignada a esquina $j$.
+        \item[$y_{uv}\in\{0,1\}$] variable: 1 si arista $(u,v)$ está en la solución (MST).
+        \item[$C$] capacidad máxima de viviendas por esquina.
+    \end{description}
+    \end{frame}
+
+    \begin{frame}{Función objetivo}
+    \[
+        \min \; Z \;=\; \underbrace{\sum_{i=1}^{N}\sum_{j=1}^{M} d_{ij}\,x_{ij}}_{\text{coste asignación}}
+        \;+\; \underbrace{\sum_{(u,v)\in E} w_{uv}\,y_{uv}}_{\text{longitud de la red (MST)}}
+    \]
+    \vspace{4mm}
+    donde $E$ es el conjunto de aristas posibles entre esquinas.
+    \end{frame}
+
+    \begin{frame}[allowframebreaks]
+        \frametitle{Restricciones (esenciales)}
+    \begin{align}
+        &\text{(Asignación única)} &\sum_{j=1}^{M} x_{ij} = 1 && \forall i=1,\dots,N \label{eq:assign}\\
+        &\text{(Capacidad por esquina)} &\sum_{i=1}^{N} x_{ij} \le C && \forall j=1,\dots,M \label{eq:cap}\\
+        &\text{(Binarias)} &x_{ij} \in\{0,1\},\; y_{uv}\in\{0,1\}  && \forall i,j,(u,v)\in E \label{eq:bin}\\
+        &\text{(MST: $M$ nodos)} &\sum_{(u,v)\in E} y_{uv} = M-1  \label{eq:MSTedges}
+    \end{align}
+    \vspace{2mm}
+    \small\textit{Nota:} la restricción que garantiza conectividad sin ciclos (estructura árbol) puede
+    modelarse mediante cortes o mediante un flujo (formulación basada en órdenes o variables de subtour elimination).
+    \end{frame}
+
+% ------------------------------------------------------------------------
+\subsection{Algoritmo propuesto (detallado)}
+    \begin{frame}{Visión general del algoritmo}
+    \begin{itemize}
+        \item Mezcla heurística (Greedy), solución exacta parcial (Prim para MST) y refinamiento local mediante MILP.
+        \item Es iterativo: se prueba con distintas capacidades u otros parámetros y se guarda la mejor solución.
+        \item En la práctica se reduce el MILP a sub-problemas manejables (pocas variables binarias en conflicto).
+    \end{itemize}
+    \end{frame}
+
+    %Pseudocódigo del algoritmo
+    \newcounter{savedAlgoLine}
+    \begin{frame}{Algoritmo 1: Optimización Vivienda–Esquina y MST (I)}
+        \scriptsize
+        \begin{algorithm}[H]
+        \DontPrintSemicolon
+        \KwData{Coordenadas de viviendas y esquinas}
+        \KwResult{Asignación óptima y árbol MST}
+
+        \textbf{Paso 1: Definir el Escenario de Viviendas}\\
+        Obtener coordenadas de las viviendas.\\
+        Sea $N$ el número total de viviendas.\\
+        Cada vivienda $i$ con $i \in \{1,2,\dots,N\}$.\\[4pt]
+
+        \textbf{Paso 2: Identificar Esquinas}\\
+        Definir las esquinas como intersecciones de la red vial.\\
+        Sea $M$ el número total de esquinas.\\
+        Cada esquina $j$ con $j \in \{1,2,\dots,M\}$.\\[4pt]
+
+        \textbf{Paso 3: Matriz de Distancias}\\
+        Calcular distancias $d_{ij}$ entre cada vivienda y esquina.\\
+        Inicializar la función objetivo con un valor muy grande.\\[4pt]
+
+        \emph{Continúa en la siguiente diapositiva...}
+
+        \setcounter{savedAlgoLine}{\value{AlgoLine}}
+        \caption{Algoritmo para optimización de asignación vivienda-esquina y diseño de red MST (Parte 1)}
+        \end{algorithm}
+    \end{frame}
+
+    \begin{frame}{Algoritmo 1: Optimización Vivienda–Esquina y MST (II)}
+        \scriptsize
+        \begin{algorithm}[H]
+        \DontPrintSemicolon
+        \setcounter{AlgoLine}{\value{savedAlgoLine}}
+        
+        \While{la función objetivo no esté minimizada}{
+            \textbf{Paso 4: Restricciones de Capacidad}\\
+            Definir capacidad máxima $C$ por esquina.\\
+            Restricción: $\sum_{i=1}^N x_{ij} \le C \ \forall j$.\\[4pt]
+
+            \textbf{Paso 5: Asignación Greedy}\\
+            Asignar cada vivienda a la esquina más cercana respetando $C$.\\
+            Restricción: $\sum_{j=1}^M x_{ij} = 1 \ \forall i$.\\
+            $x_{ij} \in \{0,1\}$.\\[2pt]
+            
+            \textbf{Paso 6: Cálculo del MST}\\
+            Calcular el árbol de expansión mínima (MST) entre las esquinas activas.\\
+            $y_{uv} \in \{0,1\}$ para cada arista $(u,v)$ del MST.\\[6pt]
+        }
+        \emph{Continúa en la siguiente diapositiva...}
+        \setcounter{savedAlgoLine}{\value{AlgoLine}}
+
+        \caption*{Algoritmo para optimización de asignación vivienda-esquina y diseño de red MST (Parte 2)}
+        \end{algorithm}
+    \end{frame}
+
+        \begin{frame}{Algoritmo 1: Optimización Vivienda–Esquina y MST (III)}
+        \scriptsize
+        \begin{algorithm}[H]
+        \DontPrintSemicolon
+        \setcounter{AlgoLine}{\value{savedAlgoLine}}
+        
+        \While{la función objetivo no esté minimizada (cont)}{
+
+            \textbf{Paso 7: Función Objetivo}\\
+            Minimizar:\\[2pt]
+            $\displaystyle
+            \sum_{i=1}^N \sum_{j=1}^M d_{ij} x_{ij}
+            +
+            \sum_{(u,v)\in E} w_{uv} y_{uv}
+            $.\\[6pt]
+            Actualizar valor de la función objetivo.\\[8pt]
+
+            \textbf{Paso 8: Iteración}\\
+            Ajustar la capacidad $C$ si fuera necesario.\\
+            Repetir el proceso hasta convergencia.
+        }
+        \caption*{Algoritmo para optimización de asignación vivienda-esquina y diseño de red MST (Parte 3)}
+        \end{algorithm}
+    \end{frame}
+
+    %comentarios del algoritmo
+    \begin{frame}{Comentarios del algoritmo}
+    \begin{itemize}
+        \item La fase Greedy es rápida y proporciona una solución inicial factible (si $C$ lo permite).
+        \item El MILP se usa solo para arreglar conflictos puntuales (reduce coste computacional).
+        \item El MST con Prim es exacto para la subparte de diseño de red.
+        \item El carácter iterativo permite explorar el impacto de $C$ y otras decisiones (robustez).
+    \end{itemize}
+    \end{frame}
+
+% ------------------------------------------------------------------------
+\subsection{Análisis de complejidad — paso a paso}
+    \begin{frame}{Notación para complejidad}
+    Definamos:
+    \begin{itemize}
+        \item $N$ = número de viviendas.
+        \item $M$ = número de esquinas.
+        \item $K$ = número de iteraciones (valores de $C$ intentados) o cambios de configuración.
+        \item $E$ = número de aristas entre esquinas (usualmente $E=O(M^2)$ en grafo completo).
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Complejidades parciales}
+    \small
+    \begin{description}
+        \item[Cálculo de matriz de distancias:] calcular $d_{ij}$ para todo par $(i,j)$:
+        \[
+            O(N\cdot M)
+        \]
+        \item[Asignación Greedy (por vivienda buscar POI más cercano con capacidad):]
+        \[
+            O(N\cdot M) \quad\text{(en implementación simple)}
+        \]
+        Si se indexa adecuadamente o se ordenan vecinos puede reducirse a $O(N\log M)$.
+        \item[Cálculo del MST (Prim con heap):]
+        \[
+            O(E \log M) \quad\text{o } O(M^2) \text{ si es denso}
+        \]
+        \item[Resolución del MILP (local):]
+        \[
+            \text{NP-hard en general; tiempo exponencial en tamaño worst-case}
+        \]
+    \end{description}
+    \end{frame}
+
+    \begin{frame}{Complejidad total estimada}
+    Combinando y multiplicando por $K$ iteraciones:
+    \[
+        T_{\text{total}}(N,M,K) \;=\; O\Big( K\cdot \big( N\!M \;+\; \text{MST}(M,E) \;+\; \text{MILP}_{\text{local}} \big) \Big)
+    \]
+    En la práctica:
+    \begin{itemize}
+        \item Si MILP se resuelve solo sobre un conjunto pequeño de variables (conflictos), su coste puede ser manejable.
+        \item Para instancias urbanas reales (M pequeño relativo a N) el algoritmo resulta práctico.
+    \end{itemize}
+    \end{frame}
+
+% ------------------------------------------------------------------------
+\section{Algoritmo STP}
+
+\begin{frame}
+  \tableofcontents[currentsection]
+\end{frame}
+
+% ------------------------------------------------------------------------
+\subsection{Título y planteamiento del problema}
+
+\begin{frame}[allowframebreaks]
+\frametitle{Título y planteamiento del problema del artículo}
+\begin{itemize}
+  \item \textbf{Título:} Distributed Q-learning-based Shortest-Path Tree Construction in IoT Sensor Networks.
+  \item \textbf{Contexto:}
+  \begin{itemize}
+    \item Redes de sensores IoT modeladas como un grafo no dirigido $G=(V,E)$.
+    \item Un nodo sumidero $v_0$ actúa como raíz del árbol de enrutamiento.
+  \end{itemize}
+  \item \textbf{Objetivo:} construir, de forma distribuida, un Árbol de Caminos Más Cortos (SPT) hacia $v_0$, donde cada nodo elige su siguiente salto usando únicamente información local.
+  \item \textbf{Idea central:}
+  \begin{itemize}
+    \item Cada nodo ejecuta Q-learning para aprender la ``calidad'' de enviar paquetes a cada vecino.
+    \item La política $\pi(v)=\arg\max_{u\in N(v)} Q(v,u)$ define el padre de $v$ en el SPT.
+  \end{itemize}
+  \framebreak
+  \item \textbf{Restricciones y requisitos:}
+  \begin{itemize}
+    \item Operación totalmente distribuida (sin controlador central).
+    \item Uso de información local (vecinos de un salto).
+    \item Árbol libre de ciclos y estable para tráfico convergecast.
+    \item Bajo consumo de energía y baja sobrecarga de señalización.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Ilustración conceptual del SPT en IoT}
+\begin{figure}[h]
+  \centering
+  % Reemplazar "EjemploA" por la figura del paper donde se observa el SPT sobre una topología de sensores.
+  \includegraphics[width=0.4\textwidth]{imagenes/SPT_DIJKSTRA.png}
+  \caption{Topología de una red de sensores IoT (nodos en azul) y sumidero $v_0$ (en rojo), donde las aristas resaltadas muestran el Árbol de Caminos Más Cortos.}
+\end{figure}
+\end{frame}
+
+% ------------------------------------------------------------------------
+\subsection{Formulación matemática}
+
+\begin{frame}{Modelo de red y problema STP}
+\begin{itemize}
+  \item Red de sensores:
+  \begin{itemize}
+    \item Grafo no dirigido $G=(V,E)$, $|V|=N$.
+    \item Enlace $(u,v)\in E$ si la distancia euclidiana es menor que un radio $R$ y la calidad de enlace es suficiente.
+    \item Nodo sumidero fijo $v_0\in V$.
+  \end{itemize}
+  \item Costo de enlace:
+  \begin{itemize}
+    \item $w(u,v)\ge 0$; en el artículo se utiliza principalmente \textbf{conteo de saltos}, es decir, $w(u,v)=1$.
+  \end{itemize}
+  \item \textbf{Árbol de Caminos Más Cortos (SPT):} árbol $T=(V,E_T)$ enraizado en $v_0$ tal que
+  \[
+    d_T(v,v_0) = d_G(v,v_0), \quad \forall v\in V,
+  \]
+  donde $d_T$ es la longitud del camino en el árbol y $d_G$ la longitud del camino más corto en $G$.
+  \item Condiciones adicionales:
+  \begin{itemize}
+    \item Operación descentralizada y basada en vecinos de un salto.
+    \item Mensajes de control pequeños y poco frecuentes.
+    \item Libre de ciclos para evitar bucles de enrutamiento.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Componentes del modelo de Q-learning}
+\begin{itemize}
+  \item \textbf{Estado:} nodo actual $v\in V$ donde se toma la decisión de enrutamiento.
+  \item \textbf{Acción:} elegir un vecino $u\in N(v)$ como siguiente salto.
+  \item \textbf{Recompensa inmediata:}
+  \[
+    r(v,u) = 
+    \begin{cases}
+      100, & \text{si } u = v_0,\\[2pt]
+      0,   & \text{si } u \in N(v)\setminus\{v_0\}.
+    \end{cases}
+  \]
+  \item \textbf{Episodio:} comienza en un nodo $v\neq v_0$ y termina cuando se alcanza $v_0$ o no hay vecinos válidos.
+  \item \textbf{Matriz Q:}
+  \begin{itemize}
+    \item Cada nodo $v$ mantiene valores $Q(v,u)$ para todos sus vecinos $u\in N(v)$.
+    \item La política $\pi(v)=\arg\max_{u\in N(v)} Q(v,u)$ define el padre de $v$ en el árbol.
+  \end{itemize}
+  \item \textbf{Parámetros:} tasa de aprendizaje $\alpha$, factor de descuento $\gamma$ y probabilidad de exploración $\epsilon$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Actualización de Q-valores}
+\begin{itemize}
+  \item Política $\epsilon$-greedy en el nodo $v$:
+  \begin{itemize}
+    \item Con probabilidad $\epsilon$: elegir $u$ al azar en $N(v)$ (exploración).
+    \item Con probabilidad $1-\epsilon$: elegir $u$ que maximiza $Q(v,u)$ (explotación).
+  \end{itemize}
+  \item Tras tomar acción $u$, se recibe recompensa $r(v,u)$ y se pasa al estado $u$.
+  \item \textbf{Ecuación de actualización (Bellman):}
+  \[
+  Q(v,u) \leftarrow (1-\alpha)Q(v,u) + \alpha\Bigl(
+    r(v,u) + \gamma \max_{u'\in N(u)} Q(u,u')
+  \Bigr).
+  \]
+  \item En convergencia, los Q-valores aproximan la estructura de caminos más cortos hacia $v_0$ y la política inducida define el SPT.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------
+\subsection{Algoritmo propuesto (detallado)}
+
+\begin{frame}{Visión general del enfoque propuesto}
+\begin{itemize}
+  \item \textbf{Fase de entrenamiento (offline):}
+  \begin{itemize}
+    \item Se generan múltiples topologías aleatorias de red.
+    \item Cada nodo ejecuta Q-learning de manera distribuida sobre esos grafos.
+    \item Se obtiene una matriz $Q$ entrenada que captura patrones de enrutamiento eficientes.
+  \end{itemize}
+  \item \textbf{Fase de prueba (online):}
+  \begin{itemize}
+    \item Sobre una nueva red, cada nodo usa la matriz $Q$ entrenada.
+    \item Cada nodo selecciona a su padre combinando $Q(v,u)$ con la distancia al sumidero.
+    \item Se construye un SPT libre de ciclos usando solo información local.
+  \end{itemize}
+  \item \textbf{Ventaja clave:}
+  \begin{itemize}
+    \item No se requiere recomputar Dijkstra ni mantener una visión global de la red.
+    \item La señalización se limita a intercambios locales entre vecinos.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Algoritmo 2: Entrenamiento Q-learning para STP}
+\scriptsize
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\KwData{Conjunto de grafos de entrenamiento $G_m=(V_m,E_m)$; sumidero $v_0$; parámetros $\alpha,\gamma,\epsilon$}
+\KwResult{Matriz $Q$ entrenada}
+Inicializar $Q(v,u)$ para todas las parejas $(v,u)$ válidas (vecinos en radio $R$).\\
+\For{$m = 1$ \KwTo $M$}{
+  Cargar el grafo $G_m=(V_m,E_m)$ con posiciones de nodos y enlaces.\;
+  \For{$k = 1$ \KwTo $K$}{
+    Elegir al azar un nodo inicial $v \in V_m \setminus \{v_0\}$.\;
+    \While{$v \neq v_0$}{
+      \tcp{Selección $\epsilon$-greedy del siguiente salto}
+      Con probabilidad $\epsilon$, escoger $u$ uniforme en $N_{V_m}(v)$.\;
+      Con probabilidad $1-\epsilon$, escoger $u=\arg\max_{u'\in N_{V_m}(v)} Q(v,u')$.\;
+      Observar recompensa $r = r(v,u)$.\;
+      Calcular $Q_{\max} = \max_{u'\in N_{V_m}(u)} Q(u,u')$.\;
+      \tcp{Actualización de Bellman}
+      $Q(v,u) \leftarrow (1-\alpha)Q(v,u) + \alpha\left(r + \gamma Q_{\max}\right)$.\;
+      $v \leftarrow u$.\;
+    }
+  }
+}
+\caption{Entrenamiento distribuido de Q-valores para construcción de un SPT}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}{Algoritmo 3: Construcción del SPT en fase de prueba}
+\scriptsize
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\KwData{Matriz $Q$ entrenada; grafo de prueba $G_t=(V,E)$; sumidero $v_0$}
+\KwResult{Árbol de caminos más cortos aproximado $T_t=(V,E_{T_t})$}
+Inicializar $E_{T_t} \leftarrow \emptyset$.\;
+\For{cada nodo $v \in V \setminus \{v_0\}$}{
+  Inicializar camino $P \leftarrow \{v\}$, nodo actual $c \leftarrow v$.\;
+  \While{$c \neq v_0$ \textbf{ y } $|P| \le |V|$}{
+    Obtener vecinos no visitados $N'(c)=\{u\in N(c)\,|\,u\notin P\}$.\;
+    \If{$N'(c)=\emptyset$}{\textbf{break} (no hay ruta válida).}
+    \tcp{Heurística: Q-valor y distancia al sumidero}
+    Para cada $u\in N'(c)$, calcular $S(u)=Q(c,u) - d(u,v_0)$.\;
+    Escoger $u=\arg\max_{u\in N'(c)} S(u)$.\;
+    Añadir arista dirigida $(c,u)$ a $E_{T_t}$.\;
+    Añadir $u$ a $P$ y actualizar $c\leftarrow u$.\;
+  }
+}
+\caption{Construcción distribuida del SPT usando la matriz $Q$ entrenada}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}{Ejecución del algoritmo sobre una topología de prueba}
+\begin{figure}[h]
+  \centering
+  % Reemplazar "EjemploA" por la figura del paper donde se muestre el SPT aprendido vs. el SPT óptimo.
+  \includegraphics[width=0.6\textwidth]{imagenes/SPT_q_LEARNING DIJKSTRA.png}
+  \caption{Comparación entre el SPT óptimo (por ejemplo, calculado con Dijkstra) y el SPT obtenido mediante Q-learning en una topología de prueba.}
+\end{figure}
+\end{frame}
+
+% ------------------------------------------------------------------------
+\subsection{Análisis de complejidad, paso a paso}
+
+\begin{frame}{Notación para complejidad (STP)}
+Definamos:
+\begin{itemize}
+  \item $N = |V|$ : número de nodos de la red.
+  \item $\Delta$ : grado máximo (número máximo de vecinos por nodo).
+  \item $M$ : número de grafos usados en el entrenamiento.
+  \item $K$ : número de episodios por grafo.
+  \item $L$ : longitud media del camino (en saltos) desde un nodo al sumidero durante el entrenamiento.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Complejidades parciales}
+\small
+\begin{description}
+  \item[Actualización de Q-valores:] en cada paso de un episodio:
+  \[
+    O(|N(v)|) \le O(\Delta),
+  \]
+  para calcular $Q_{\max}$ sobre los vecinos del siguiente nodo.
+  \item[Episodio de entrenamiento:] si el trayecto típico tiene longitud $L$:
+  \[
+    O(L \cdot \Delta).
+  \]
+  \item[Entrenamiento total:] sobre $M$ grafos y $K$ episodios por grafo:
+  \[
+    O(M \cdot K \cdot L \cdot \Delta).
+  \]
+  \item[Construcción del SPT en prueba:] para cada nodo $v$ se sigue una ruta hacia $v_0$ evitando ciclos:
+  \[
+    O(L \cdot \Delta) \text{ por nodo } \Rightarrow O(N \cdot L \cdot \Delta).
+  \]
+  \item[Comunicación:] cada actualización requiere solo información de vecinos de un salto, con sobrecarga $O(1)$ por paso.
+\end{description}
+\end{frame}
+
+\begin{frame}{Complejidad total y comparación}
+\begin{itemize}
+  \item \textbf{Entrenamiento (offline):}
+  \[
+    T_{\text{train}}(N) = O(M \cdot K \cdot L \cdot \Delta).
+  \]
+  \item \textbf{Construcción del SPT (online):}
+  \[
+    T_{\text{test}}(N) = O(N \cdot L \cdot \Delta),
+  \]
+  ejecutado de forma \emph{distribuida} en todos los nodos.
+  \item \textbf{Comparación con algoritmos clásicos:}
+  \begin{itemize}
+    \item Dijkstra centralizado: $O(N^2)$ (o $O((N+E)\log N)$) más el coste de recolectar la topología completa.
+    \item STP con Q-learning distribuido: coste aproximadamente lineal en $N$ por ejecución online, sin recopilar el grafo completo.
+  \end{itemize}
+  \item \textbf{Conclusión parcial:} el esfuerzo de entrenamiento se paga una sola vez; luego el enrutamiento es ligero y adecuado para redes IoT grandes y dinámicas.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------
+\section{Conclusiones}
+
+\begin{frame}
+\frametitle{Conclusiones generales}
+\begin{itemize}
+  \item \textbf{Algoritmo MST (Buildings 2024):}
+  \begin{itemize}
+    \item Integra la asignación vivienda–esquina con un MST sobre esquinas.
+    \item Combina heurísticas Greedy, MST clásico y MILP para refinar la solución.
+    \item Es adecuado para planificación urbana estática con restricciones de capacidad.
+  \end{itemize}
+  \item \textbf{Algoritmo STP (Q-learning distribuido):}
+  \begin{itemize}
+    \item Ataca el problema de enrutamiento en redes IoT con recursos limitados.
+    \item Cada nodo aprende localmente su siguiente salto hacia el sumidero, formando un SPT casi óptimo.
+    \item No requiere conocimiento global ni recomputar rutas de forma centralizada.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusiones específicas del STP con Q-learning}
+\begin{itemize}
+  \item El marco propuesto logra \textbf{altas tasas de precisión} en la reconstrucción del árbol de caminos más cortos:
+  \begin{itemize}
+    \item Errores típicos de 1--2 saltos en redes pequeñas.
+    \item Exactitud muy cercana al 100\% en redes de tamaño medio y grande reportadas en el paper.
+  \end{itemize}
+  \item El algoritmo es:
+  \begin{itemize}
+    \item \textbf{Distribuido y escalable}, con baja sobrecarga de comunicación.
+    \item \textbf{Robusto} frente a cambios de topología y fallas de nodos.
+    \item \textbf{Generalizable} entre distintos tamaños de red, reduciendo la necesidad de reentrenamiento.
+  \end{itemize}
+  \item \textbf{Líneas futuras:}
+  \begin{itemize}
+    \item Extender a \emph{deep reinforcement learning} para topologías aún más grandes.
+    \item Incorporar métricas adicionales (energía residual, calidad de enlace, retraso).
+    \item Validar el enfoque en plataformas IoT reales y escenarios urbanos inteligentes.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}

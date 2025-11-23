@@ -1,0 +1,32 @@
+\frametitle{Asignación viviendas–esquinas (II)}
+\begin{algorithm}[H]
+        \algrestore{asigMST} % <<--- continuar desde aquí
+
+        \While{la función objetivo no esté minimizada}{
+            \textbf{Paso 4: Restricciones de Capacidad}\\
+            Definir capacidad máxima $C$ por esquina.\\
+            Restricción: $\sum_{i=1}^N x_{ij} \le C \ \forall j$.\\[4pt]
+
+            \textbf{Paso 5: Asignación Greedy}\\
+            Asignar cada vivienda a la esquina más cercana respetando $C$.\\
+            Restricción: $\sum_{j=1}^M x_{ij} = 1 \ \forall i$.\\
+            $x_{ij} \in \{0,1\}$.\\[2pt]
+
+            \textbf{Paso 6: Cálculo del MST}\\
+            Calcular el árbol de expansión mínima (MST) entre las esquinas activas.\\
+            $y_{uv} \in \{0,1\}$ para cada arista $(u,v)$ del MST.\\[6pt]
+
+            \textbf{Paso 7: Función Objetivo}\\
+            Minimizar:\\[2pt]
+            $\displaystyle
+            \sum_{i=1}^N \sum_{j=1}^M d_{ij} x_{ij}
+            +
+            \sum_{(u,v)\in E} w_{uv} y_{uv}
+            $.\\[6pt]
+            Actualizar valor de la función objetivo.\\[8pt]
+
+            \textbf{Paso 8: Iteración}\\
+            Ajustar la capacidad $C$ si fuera necesario.\\
+            Repetir el proceso hasta convergencia.\\
+        }
+    \end{algorithm}
