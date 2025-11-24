@@ -11,6 +11,7 @@ Ejemplo simplificado del enfoque:
 import random
 import math
 from collections import deque, defaultdict
+import matplotlib.pyplot as plt
 
 # ---------------------------------------------------------------------
 # Parámetros del ejemplo
@@ -240,3 +241,69 @@ for v in sorted(grafo.keys()):
 
     print(f"Nodo {v}: dist_real={dist_real[v]:2}, "
           f"dist_politica={long_camino if long_camino is not None else 'N/A'}")
+
+# ---------------------------------------------------------------------
+# Visualización del grafo con SPT resaltado
+# ---------------------------------------------------------------------
+
+def visualizar_grafo_con_spt(posiciones, grafo, parent, sink):
+    """
+    Visualiza el grafo geométrico con:
+    - Nodos en azul, excepto el sink en rojo
+    - Aristas del grafo en gris claro
+    - Aristas del SPT (parent) en verde más grueso
+    """
+    import matplotlib.pyplot as plt
+    
+    fig, ax = plt.subplots(figsize=(10, 10))
+    
+    # Dibujar todas las aristas del grafo en gris claro
+    for v in grafo:
+        for u in grafo[v]:
+            if v < u:  # evitar dibujar dos veces
+                x1, y1 = posiciones[v]
+                x2, y2 = posiciones[u]
+                ax.plot([x1, x2], [y1, y2], 'gray', alpha=0.3, linewidth=1, zorder=1)
+    
+    # Dibujar aristas del SPT (parent) en verde más grueso
+    for v, padre in parent.items():
+        x1, y1 = posiciones[v]
+        x2, y2 = posiciones[padre]
+        ax.plot([x1, x2], [y1, y2], 'green', linewidth=2.5, zorder=2, label='SPT' if v == list(parent.keys())[0] else '')
+    
+    # Dibujar nodos
+    for v in grafo:
+        x, y = posiciones[v]
+        if v == sink:
+            # Nodo sumidero en rojo
+            ax.scatter(x, y, s=300, c='red', marker='s', zorder=3, edgecolors='darkred', linewidth=2)
+            ax.text(x, y, str(v), ha='center', va='center', fontsize=10, fontweight='bold', color='white')
+        else:
+            # Nodos normales en azul
+            ax.scatter(x, y, s=300, c='lightblue', marker='o', zorder=3, edgecolors='darkblue', linewidth=2)
+            ax.text(x, y, str(v), ha='center', va='center', fontsize=10, fontweight='bold', color='darkblue')
+    
+    ax.set_xlim(-0.1, 1.1)
+    ax.set_ylim(-0.1, 1.1)
+    ax.set_aspect('equal')
+    ax.set_title(f'Red IoT: Grafo Geométrico con SPT\n(Sink={sink} en rojo, SPT en verde)', fontsize=14, fontweight='bold')
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    
+    # Leyenda
+    from matplotlib.patches import Patch
+    legend_elements = [
+        Patch(facecolor='red', edgecolor='darkred', label='Nodo Sumidero (Sink)'),
+        Patch(facecolor='lightblue', edgecolor='darkblue', label='Nodos Normales'),
+        plt.Line2D([0], [0], color='green', linewidth=2.5, label='Aristas SPT'),
+        plt.Line2D([0], [0], color='gray', linewidth=1, alpha=0.3, label='Aristas del Grafo')
+    ]
+    ax.legend(handles=legend_elements, loc='upper left', fontsize=10)
+    
+    ax.grid(True, alpha=0.2)
+    plt.tight_layout()
+    return fig, ax
+
+# Generar y mostrar la visualización
+fig, ax = visualizar_grafo_con_spt(posiciones, grafo, parent, SINK)
+plt.show()

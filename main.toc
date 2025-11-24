@@ -4,10 +4,12 @@
 \beamer@subsectionintoc {2}{1}{Título y planteamiento del problema}{5}{0}{2}
 \beamer@subsectionintoc {2}{2}{Formulación matemática (MILP)}{7}{0}{2}
 \beamer@subsectionintoc {2}{3}{Algoritmo propuesto (detallado)}{10}{0}{2}
-\beamer@subsectionintoc {2}{4}{Análisis de complejidad — paso a paso}{15}{0}{2}
-\beamer@sectionintoc {3}{Algoritmo STP}{18}{0}{3}
-\beamer@subsectionintoc {3}{1}{Título y planteamiento del problema}{19}{0}{3}
-\beamer@subsectionintoc {3}{2}{Formulación matemática}{22}{0}{3}
-\beamer@subsectionintoc {3}{3}{Algoritmo propuesto (detallado)}{25}{0}{3}
-\beamer@subsectionintoc {3}{4}{Análisis de complejidad, paso a paso}{29}{0}{3}
-\beamer@sectionintoc {4}{Conclusiones}{32}{0}{4}
+\beamer@subsectionintoc {2}{4}{Ejemplo de Aplicación del Algoritmo}{14}{0}{2}
+\beamer@subsectionintoc {2}{5}{Análisis de complejidad — paso a paso}{17}{0}{2}
+\beamer@sectionintoc {3}{Algoritmo SPT}{20}{0}{3}
+\beamer@subsectionintoc {3}{1}{Título y planteamiento del problema}{21}{0}{3}
+\beamer@subsectionintoc {3}{2}{Formulación matemática}{24}{0}{3}
+\beamer@subsectionintoc {3}{3}{Algoritmo propuesto (detallado)}{27}{0}{3}
+\beamer@subsectionintoc {3}{4}{Ejemplo de aplicación del algoritmo}{31}{0}{3}
+\beamer@subsectionintoc {3}{5}{Análisis de complejidad, paso a paso}{36}{0}{3}
+\beamer@sectionintoc {4}{Conclusiones}{39}{0}{4}

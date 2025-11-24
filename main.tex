@@ -23,7 +23,7 @@
 \end{tikzpicture}
 }
 
-\title[SMTP \& STP]{Algoritmos MST y STP aplicados en artículos recientes}
+\title[SMTP \& SPT]{Algoritmos MST y SPT aplicados en artículos recientes}
 \author[Delgado R. \and Torres R.]{Delgado Romero, Gustavo \inst{1} \and Torres Reategui, Joaquin\inst{2}}
 \institute[UNI-FC]{
   \inst{}%
@@ -53,7 +53,7 @@
 \section{Introducción}
 \begin{frame}
 \frametitle{Introducción}
-A continuación, se presentan dos algoritmos utilizados en la optimización de redes y estructuras: el Algoritmo de Árbol de Expansión Mínima (MST) y el Algoritmo de Árbol de caminos más cortos (STP). Estos algoritmos son fundamentales en diversas aplicaciones, desde la planificación de infraestructuras hasta la optimización de rutas en redes de comunicación.   
+A continuación, se presentan dos algoritmos utilizados en la optimización de redes y estructuras: el Algoritmo de Árbol de Expansión Mínima (MST) y el Algoritmo de Árbol de caminos más cortos (SPT). Estos algoritmos son fundamentales en diversas aplicaciones, desde la planificación de infraestructuras hasta la optimización de rutas en redes de comunicación.   
 \end{frame}
 
 \section{Algoritmo MST}
@@ -216,6 +216,95 @@ A continuación, se presentan dos algoritmos utilizados en la optimización de r
         \caption*{Algoritmo para optimización de asignación vivienda-esquina y diseño de red MST (Parte 3)}
         \end{algorithm}
     \end{frame}
+\subsection{Ejemplo de Aplicación del Algoritmo}
+
+\begin{frame}{Ejemplo Simple: Escenario Urbano}
+\scriptsize
+
+\textbf{Viviendas (coordenadas):}
+\begin{itemize}
+    \item H1 = (1,1)
+    \item H2 = (2,1)
+    \item H3 = (4,2)
+    \item H4 = (6,1)
+\end{itemize}
+
+\textbf{Esquinas:}
+\begin{itemize}
+    \item C1 = (1,2)
+    \item C2 = (4,1)
+    \item C3 = (7,2)
+\end{itemize}
+
+\textbf{Capacidad por esquina:} $C = 2$
+
+\textbf{Distancias vivienda--esquina:}
+
+\begin{center}
+\begin{tabular}{c|c|c|c}
+ & C1 & C2 & C3 \\
+\hline
+H1 & 1.0 & 3.0 & 6.1 \\
+H2 & 1.4 & 2.0 & 5.1 \\
+H3 & 3.6 & 1.0 & 3.2 \\
+H4 & 5.4 & 2.0 & 1.4 \\
+\end{tabular}
+\end{center}
+
+\textbf{Asignación Greedy:}
+\begin{itemize}
+    \item H1 → C1
+    \item H2 → C1 (C1 lleno)
+    \item H3 → C2
+    \item H4 → C3
+\end{itemize}
+
+Capacidades satisfechas.
+
+\end{frame}
+\begin{frame}{Ejemplo Simple: MST y Costo Final}
+\scriptsize
+
+\textbf{Paso 6: Cálculo del MST entre esquinas activas}
+
+Distancias entre esquinas:
+\begin{itemize}
+    \item C1–C2 = 3.2
+    \item C2–C3 = 3.2
+    \item C1–C3 = 6.1
+\end{itemize}
+
+\textbf{MST elegido:}
+\[
+\{ (C1,C2),\ (C2,C3) \}
+\]
+
+Longitud total del MST:
+\[
+3.2 + 3.2 = 6.4
+\]
+
+\textbf{Costo de asignación:}
+
+\[
+1.0 + 1.4 + 1.0 + 1.4 = 4.8
+\]
+
+\textbf{Costo total:}
+\[
+4.8 + 6.4 = \boxed{11.2}
+\]
+
+\textbf{Resultado final:}
+\begin{itemize}
+    \item C1 ← H1, H2
+    \item C2 ← H3
+    \item C3 ← H4
+    \item MST conecta C1–C2–C3
+\end{itemize}
+
+\end{frame}
+
 
     %comentarios del algoritmo
     \begin{frame}{Comentarios del algoritmo}
@@ -267,15 +356,14 @@ A continuación, se presentan dos algoritmos utilizados en la optimización de r
     \[
         T_{\text{total}}(N,M,K) \;=\; O\Big( K\cdot \big( N\!M \;+\; \text{MST}(M,E) \;+\; \text{MILP}_{\text{local}} \big) \Big)
     \]
-    En la práctica:
-    \begin{itemize}
-        \item Si MILP se resuelve solo sobre un conjunto pequeño de variables (conflictos), su coste puede ser manejable.
-        \item Para instancias urbanas reales (M pequeño relativo a N) el algoritmo resulta práctico.
-    \end{itemize}
+    Simplificando:
+    \[
+    T_{\text{total}}(N,M,K) \;=\; O\Big( K\big(N\!M^2)\Big)
+    \]
     \end{frame}
 
 % ------------------------------------------------------------------------
-\section{Algoritmo STP}
+\section{Algoritmo SPT}
 
 \begin{frame}
   \tableofcontents[currentsection]
@@ -322,7 +410,7 @@ A continuación, se presentan dos algoritmos utilizados en la optimización de r
 % ------------------------------------------------------------------------
 \subsection{Formulación matemática}
 
-\begin{frame}{Modelo de red y problema STP}
+\begin{frame}{Modelo de red y problema SPT}
 \begin{itemize}
   \item Red de sensores:
   \begin{itemize}
@@ -413,7 +501,7 @@ A continuación, se presentan dos algoritmos utilizados en la optimización de r
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Algoritmo 2: Entrenamiento Q-learning para STP}
+\begin{frame}{Algoritmo 2: Entrenamiento Q-learning para SPT}
 \scriptsize
 \begin{algorithm}[H]
 \DontPrintSemicolon
@@ -473,9 +561,114 @@ Inicializar $E_{T_t} \leftarrow \emptyset$.\;
 \end{frame}
 
 % ------------------------------------------------------------------------
+\subsection{Ejemplo de aplicación del algoritmo}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Ejemplo Simple: Red IoT geométrica}
+\scriptsize
+
+\textbf{Escenario:}
+\begin{itemize}
+    \item Red IoT con $6$ nodos numerados de $0$ a $5$.
+    \item Nodo sumidero (raíz del SPT): $0$.
+    \item Nodos distribuidos aleatoriamente en el cuadrado $[0,1]\times[0,1]$.
+    \item Enlace $(u,v)$ si la distancia euclidiana $\leq R = 0.5$.
+\end{itemize}
+\framebreak
+\textbf{Posiciones (ejemplo fijo):}
+\begin{itemize}
+    \item $0 = (0.10,\ 0.50)$ (sumidero)
+    \item $1 = (0.20,\ 0.80)$
+    \item $2 = (0.40,\ 0.60)$
+    \item $3 = (0.70,\ 0.70)$
+    \item $4 = (0.60,\ 0.30)$
+    \item $5 = (0.30,\ 0.20)$
+\end{itemize}
+
+\textbf{Vecindarios obtenidos con $R=0.5$:}
+
+\begin{center}
+\begin{tabular}{c|l}
+\toprule
+Nodo & Vecinos $N(v)$ \\
+\midrule
+0 & $\{1,2,5\}$ \\
+1 & $\{0,2\}$ \\
+2 & $\{0,1,3,4,5\}$ \\
+3 & $\{2,4\}$ \\
+4 & $\{2,3,5\}$ \\
+5 & $\{0,2,4\}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{1mm}
+
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Ejemplo Simple: SPT aprendido y comparación}
+\scriptsize
+
+\textbf{Parámetros de entrenamiento:}
+\begin{itemize}
+    \item Número de episodios: $\texttt{NUM\_EPISODIOS} = 4000$.
+    \item Máximo de pasos por episodio: $\texttt{MAX\_PASOS} = 2N$.
+    \item Tasa de aprendizaje: $\alpha = 0.5$.
+    \item Factor de descuento: $\gamma = 0.9$.
+    \item Exploración $\epsilon$-greedy: $\epsilon = 0.2$.
+\end{itemize}
+\framebreak
+\textbf{Política aprendida (padre de cada nodo):}
+\[
+\texttt{parent} =
+\begin{cases}
+\text{parent}(0) = \text{None} & \text{(sumidero)}\\
+\text{parent}(1) = 0, \\
+\text{parent}(2) = 0, \\
+\text{parent}(3) = 2, \\
+\text{parent}(4) = 2, \\
+\text{parent}(5) = 0. \\
+\end{cases}
+\]
+
+Esto define un SPT aproximado con las aristas:
+\[
+E_T = \{(1,0),\ (2,0),\ (5,0),\ (3,2),\ (4,2)\}.
+\]
+
+\textbf{Comparación distancias reales vs. política Q-learning:}
+
+\begin{center}
+\begin{tabular}{c|c|c|l}
+\toprule
+Nodo & $d_{\text{real}}(v,0)$ & $d_{\text{Q}}(v,0)$ & Camino por la política \\
+\midrule
+1 & 1 & 1 & $1 \rightarrow 0$ \\
+2 & 1 & 1 & $2 \rightarrow 0$ \\
+3 & 2 & 2 & $3 \rightarrow 2 \rightarrow 0$ \\
+4 & 2 & 2 & $4 \rightarrow 2 \rightarrow 0$ \\
+5 & 1 & 1 & $5 \rightarrow 0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\framebreak
+\vspace{1mm}
+\begin{figure}[h]
+  \centering
+  % Reemplazar "EjemploA" por una figura generada a partir del script en Python,
+  % donde se vean los nodos, los enlaces y el SPT resaltado.
+  \includegraphics[width=0.8\textwidth]{imagenes/Ejemplo_A.png}
+  \caption{\scriptsize Visualización del ejemplo: los puntos representan los nodos de la red IoT, el nodo 0 (sumidero) se resalta en rojo y las aristas en verde muestran el SPT aprendido por Q-learning.}
+\end{figure}
+
+\end{frame}
+% ------------------------------------------------------------------------
+
 \subsection{Análisis de complejidad, paso a paso}
 
-\begin{frame}{Notación para complejidad (STP)}
+\begin{frame}{Notación para complejidad (SPT)}
 Definamos:
 \begin{itemize}
   \item $N = |V|$ : número de nodos de la red.
@@ -524,7 +717,7 @@ Definamos:
   \item \textbf{Comparación con algoritmos clásicos:}
   \begin{itemize}
     \item Dijkstra centralizado: $O(N^2)$ (o $O((N+E)\log N)$) más el coste de recolectar la topología completa.
-    \item STP con Q-learning distribuido: coste aproximadamente lineal en $N$ por ejecución online, sin recopilar el grafo completo.
+    \item SPT con Q-learning distribuido: coste aproximadamente lineal en $N$ por ejecución online, sin recopilar el grafo completo.
   \end{itemize}
   \item \textbf{Conclusión parcial:} el esfuerzo de entrenamiento se paga una sola vez; luego el enrutamiento es ligero y adecuado para redes IoT grandes y dinámicas.
 \end{itemize}
@@ -542,7 +735,7 @@ Definamos:
     \item Combina heurísticas Greedy, MST clásico y MILP para refinar la solución.
     \item Es adecuado para planificación urbana estática con restricciones de capacidad.
   \end{itemize}
-  \item \textbf{Algoritmo STP (Q-learning distribuido):}
+  \item \textbf{Algoritmo SPT (Q-learning distribuido):}
   \begin{itemize}
     \item Ataca el problema de enrutamiento en redes IoT con recursos limitados.
     \item Cada nodo aprende localmente su siguiente salto hacia el sumidero, formando un SPT casi óptimo.
@@ -552,7 +745,7 @@ Definamos:
 \end{frame}
 
 \begin{frame}
-\frametitle{Conclusiones específicas del STP con Q-learning}
+\frametitle{Conclusiones específicas del SPT con Q-learning}
 \begin{itemize}
   \item El marco propuesto logra \textbf{altas tasas de precisión} en la reconstrucción del árbol de caminos más cortos:
   \begin{itemize}

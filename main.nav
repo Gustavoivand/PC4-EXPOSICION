@@ -36,64 +36,82 @@
 \headcommand {\beamer@framepages {12}{12}}
 \headcommand {\slideentry {2}{3}{4}{13/13}{Algoritmo propuesto (detallado)}{0}}
 \headcommand {\beamer@framepages {13}{13}}
-\headcommand {\slideentry {2}{3}{5}{14/14}{Algoritmo propuesto (detallado)}{0}}
+\headcommand {\beamer@subsectionpages {10}{13}}
+\headcommand {\beamer@subsectionentry {0}{2}{4}{14}{Ejemplo de Aplicación del Algoritmo}}
+\headcommand {\slideentry {2}{4}{1}{14/14}{Ejemplo de Aplicación del Algoritmo}{0}}
 \headcommand {\beamer@framepages {14}{14}}
-\headcommand {\beamer@subsectionpages {10}{14}}
-\headcommand {\beamer@subsectionentry {0}{2}{4}{15}{Análisis de complejidad — paso a paso}}
-\headcommand {\slideentry {2}{4}{1}{15/15}{Análisis de complejidad — paso a paso}{0}}
+\headcommand {\slideentry {2}{4}{2}{15/15}{Ejemplo de Aplicación del Algoritmo}{0}}
 \headcommand {\beamer@framepages {15}{15}}
-\headcommand {\slideentry {2}{4}{2}{16/16}{Análisis de complejidad — paso a paso}{0}}
+\headcommand {\slideentry {2}{4}{3}{16/16}{Ejemplo de Aplicación del Algoritmo}{0}}
 \headcommand {\beamer@framepages {16}{16}}
-\headcommand {\slideentry {2}{4}{3}{17/17}{Análisis de complejidad — paso a paso}{0}}
+\headcommand {\beamer@subsectionpages {14}{16}}
+\headcommand {\beamer@subsectionentry {0}{2}{5}{17}{Análisis de complejidad — paso a paso}}
+\headcommand {\slideentry {2}{5}{1}{17/17}{Análisis de complejidad — paso a paso}{0}}
 \headcommand {\beamer@framepages {17}{17}}
-\headcommand {\beamer@sectionpages {4}{17}}
-\headcommand {\beamer@subsectionpages {15}{17}}
-\headcommand {\sectionentry {3}{Algoritmo STP}{18}{Algoritmo STP}{0}}
-\headcommand {\slideentry {3}{0}{1}{18/18}{}{0}}
+\headcommand {\slideentry {2}{5}{2}{18/18}{Análisis de complejidad — paso a paso}{0}}
 \headcommand {\beamer@framepages {18}{18}}
-\headcommand {\beamer@subsectionpages {18}{18}}
-\headcommand {\beamer@subsectionentry {0}{3}{1}{19}{Título y planteamiento del problema}}
-\headcommand {\slideentry {3}{1}{1}{19/19}{Título y planteamiento del problema}{0}}
+\headcommand {\slideentry {2}{5}{3}{19/19}{Análisis de complejidad — paso a paso}{0}}
 \headcommand {\beamer@framepages {19}{19}}
-\headcommand {\slideentry {3}{1}{1}{19/20}{Título y planteamiento del problema}{0}}
-\headcommand {\beamer@framepages {19}{20}}
-\headcommand {\slideentry {3}{1}{2}{21/21}{Título y planteamiento del problema}{0}}
+\headcommand {\beamer@sectionpages {4}{19}}
+\headcommand {\beamer@subsectionpages {17}{19}}
+\headcommand {\sectionentry {3}{Algoritmo SPT}{20}{Algoritmo SPT}{0}}
+\headcommand {\slideentry {3}{0}{1}{20/20}{}{0}}
+\headcommand {\beamer@framepages {20}{20}}
+\headcommand {\beamer@subsectionpages {20}{20}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{21}{Título y planteamiento del problema}}
+\headcommand {\slideentry {3}{1}{1}{21/21}{Título y planteamiento del problema}{0}}
 \headcommand {\beamer@framepages {21}{21}}
-\headcommand {\beamer@subsectionpages {19}{21}}
-\headcommand {\beamer@subsectionentry {0}{3}{2}{22}{Formulación matemática}}
-\headcommand {\slideentry {3}{2}{1}{22/22}{Formulación matemática}{0}}
-\headcommand {\beamer@framepages {22}{22}}
-\headcommand {\slideentry {3}{2}{2}{23/23}{Formulación matemática}{0}}
+\headcommand {\slideentry {3}{1}{1}{21/22}{Título y planteamiento del problema}{0}}
+\headcommand {\beamer@framepages {21}{22}}
+\headcommand {\slideentry {3}{1}{2}{23/23}{Título y planteamiento del problema}{0}}
 \headcommand {\beamer@framepages {23}{23}}
-\headcommand {\slideentry {3}{2}{3}{24/24}{Formulación matemática}{0}}
+\headcommand {\beamer@subsectionpages {21}{23}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{24}{Formulación matemática}}
+\headcommand {\slideentry {3}{2}{1}{24/24}{Formulación matemática}{0}}
 \headcommand {\beamer@framepages {24}{24}}
-\headcommand {\beamer@subsectionpages {22}{24}}
-\headcommand {\beamer@subsectionentry {0}{3}{3}{25}{Algoritmo propuesto (detallado)}}
-\headcommand {\slideentry {3}{3}{1}{25/25}{Algoritmo propuesto (detallado)}{0}}
+\headcommand {\slideentry {3}{2}{2}{25/25}{Formulación matemática}{0}}
 \headcommand {\beamer@framepages {25}{25}}
-\headcommand {\slideentry {3}{3}{2}{26/26}{Algoritmo propuesto (detallado)}{0}}
+\headcommand {\slideentry {3}{2}{3}{26/26}{Formulación matemática}{0}}
 \headcommand {\beamer@framepages {26}{26}}
-\headcommand {\slideentry {3}{3}{3}{27/27}{Algoritmo propuesto (detallado)}{0}}
+\headcommand {\beamer@subsectionpages {24}{26}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{27}{Algoritmo propuesto (detallado)}}
+\headcommand {\slideentry {3}{3}{1}{27/27}{Algoritmo propuesto (detallado)}{0}}
 \headcommand {\beamer@framepages {27}{27}}
-\headcommand {\slideentry {3}{3}{4}{28/28}{Algoritmo propuesto (detallado)}{0}}
+\headcommand {\slideentry {3}{3}{2}{28/28}{Algoritmo propuesto (detallado)}{0}}
 \headcommand {\beamer@framepages {28}{28}}
-\headcommand {\beamer@subsectionpages {25}{28}}
-\headcommand {\beamer@subsectionentry {0}{3}{4}{29}{Análisis de complejidad, paso a paso}}
-\headcommand {\slideentry {3}{4}{1}{29/29}{Análisis de complejidad, paso a paso}{0}}
+\headcommand {\slideentry {3}{3}{3}{29/29}{Algoritmo propuesto (detallado)}{0}}
 \headcommand {\beamer@framepages {29}{29}}
-\headcommand {\slideentry {3}{4}{2}{30/30}{Análisis de complejidad, paso a paso}{0}}
+\headcommand {\slideentry {3}{3}{4}{30/30}{Algoritmo propuesto (detallado)}{0}}
 \headcommand {\beamer@framepages {30}{30}}
-\headcommand {\slideentry {3}{4}{3}{31/31}{Análisis de complejidad, paso a paso}{0}}
+\headcommand {\beamer@subsectionpages {27}{30}}
+\headcommand {\beamer@subsectionentry {0}{3}{4}{31}{Ejemplo de aplicación del algoritmo}}
+\headcommand {\slideentry {3}{4}{1}{31/31}{Ejemplo de aplicación del algoritmo}{0}}
 \headcommand {\beamer@framepages {31}{31}}
-\headcommand {\beamer@sectionpages {18}{31}}
-\headcommand {\beamer@subsectionpages {29}{31}}
-\headcommand {\sectionentry {4}{Conclusiones}{32}{Conclusiones}{0}}
-\headcommand {\slideentry {4}{0}{1}{32/32}{}{0}}
-\headcommand {\beamer@framepages {32}{32}}
-\headcommand {\slideentry {4}{0}{2}{33/33}{}{0}}
+\headcommand {\slideentry {3}{4}{1}{31/32}{Ejemplo de aplicación del algoritmo}{0}}
+\headcommand {\beamer@framepages {31}{32}}
+\headcommand {\slideentry {3}{4}{2}{33/33}{Ejemplo de aplicación del algoritmo}{0}}
 \headcommand {\beamer@framepages {33}{33}}
-\headcommand {\beamer@partpages {1}{33}}
-\headcommand {\beamer@subsectionpages {32}{33}}
-\headcommand {\beamer@sectionpages {32}{33}}
-\headcommand {\beamer@documentpages {33}}
-\headcommand {\gdef \inserttotalframenumber {33}}
+\headcommand {\slideentry {3}{4}{2}{33/34}{Ejemplo de aplicación del algoritmo}{0}}
+\headcommand {\beamer@framepages {33}{34}}
+\headcommand {\slideentry {3}{4}{2}{33/35}{Ejemplo de aplicación del algoritmo}{0}}
+\headcommand {\beamer@framepages {33}{35}}
+\headcommand {\beamer@subsectionpages {31}{35}}
+\headcommand {\beamer@subsectionentry {0}{3}{5}{36}{Análisis de complejidad, paso a paso}}
+\headcommand {\slideentry {3}{5}{1}{36/36}{Análisis de complejidad, paso a paso}{0}}
+\headcommand {\beamer@framepages {36}{36}}
+\headcommand {\slideentry {3}{5}{2}{37/37}{Análisis de complejidad, paso a paso}{0}}
+\headcommand {\beamer@framepages {37}{37}}
+\headcommand {\slideentry {3}{5}{3}{38/38}{Análisis de complejidad, paso a paso}{0}}
+\headcommand {\beamer@framepages {38}{38}}
+\headcommand {\beamer@sectionpages {20}{38}}
+\headcommand {\beamer@subsectionpages {36}{38}}
+\headcommand {\sectionentry {4}{Conclusiones}{39}{Conclusiones}{0}}
+\headcommand {\slideentry {4}{0}{1}{39/39}{}{0}}
+\headcommand {\beamer@framepages {39}{39}}
+\headcommand {\slideentry {4}{0}{2}{40/40}{}{0}}
+\headcommand {\beamer@framepages {40}{40}}
+\headcommand {\beamer@partpages {1}{40}}
+\headcommand {\beamer@subsectionpages {39}{40}}
+\headcommand {\beamer@sectionpages {39}{40}}
+\headcommand {\beamer@documentpages {40}}
+\headcommand {\gdef \inserttotalframenumber {40}}

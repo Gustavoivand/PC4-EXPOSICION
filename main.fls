@@ -492,6 +492,11 @@ INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmsso1
 INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmssbx10.tfm
 INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmssbx10.tfm
 INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmssbx10.tfm
+INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\tex\latex\lm\ts1lmss.fd
+INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\tex\latex\lm\ts1lmss.fd
+INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\tex\latex\lm\ts1lmss.fd
+INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ts1-lmss8.tfm
+INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-ts1.enc
 INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmss10.tfm
 INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmss8.tfm
 INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmi10.tfm
@@ -524,6 +529,14 @@ INPUT .\imagenes\SPT_q_LEARNING DIJKSTRA.png
 INPUT .\imagenes\SPT_q_LEARNING DIJKSTRA.png
 INPUT .\imagenes\SPT_q_LEARNING DIJKSTRA.png
 INPUT .\imagenes\SPT_q_LEARNING DIJKSTRA.png
+INPUT C:\Users\gusta\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt8.tfm
+INPUT .\imagenes\Ejemplo_A.png
+INPUT .\imagenes\Ejemplo_A.png
+INPUT .\imagenes\Ejemplo_A.png
+INPUT .\imagenes\Ejemplo_A.png
+INPUT .\imagenes\Ejemplo_A.png
+INPUT .\imagenes\Ejemplo_A.png
+INPUT .\imagenes\Ejemplo_A.png
 OUTPUT main.nav
 OUTPUT main.toc
 OUTPUT main.snm
